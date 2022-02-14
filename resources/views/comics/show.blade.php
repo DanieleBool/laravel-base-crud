@@ -8,14 +8,14 @@
         </div>
         <div class="col-9">
             <ul class="list-group">
-                <li class="list-group-item">Descrizione: {{$comic->description}}</li>
-                <li class="list-group-item">Prezzo: {{$comic->price}}</li>
-                <li class="list-group-item">Serie: {{$comic->series}}</li>
-                <li class="list-group-item">Data: {{$comic->sale_date}}</li>
-                <li class="list-group-item">Tipo: {{$comic->type}}</li>
+                <li class="list-group-item">Description: {{$comic->description}}</li>
+                <li class="list-group-item">Price: {{$comic->price}}</li>
+                <li class="list-group-item">Series: {{$comic->series}}</li>
+                <li class="list-group-item">Date: {{$comic->sale_date}}</li>
+                <li class="list-group-item">Type: {{$comic->type}}</li>
             </ul>
             <div class="my-4">
-                <a href="{{route("comics.index")}}"><button type="button" class="btn btn-primary">Torna indietro</button></a>
+                <a href="{{route("comics.index")}}"><button type="button" class="btn btn-primary">Go back</button></a>
             </div>
         </div>
     </div>
