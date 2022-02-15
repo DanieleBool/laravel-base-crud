@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Comic;
+use Illuminate\Validation\Rule;
 
 class ComicController extends Controller
 {
@@ -50,13 +51,16 @@ class ComicController extends Controller
         // $newComic -> save();
         //validazione
         $request->validate([
-            "title" => "required",
-            "description" => "nullable",
-            "thumb" => "required",
-            "price" => "required",
-            "series" => "required",
-            "sale_date" => "required",
-            "type" => "required",
+            "title" => "required|string|max:200",
+            "description" => "nullable|string",
+            "thumb" => "nullable|string|max:400|url",
+            "price" => "required|numeric",
+            "series" => "required|string|max:100",
+            "sale_date" => "required|date",
+            "type" => ["required",
+                Rule::in(["comic book", "graphic novel"])
+            ],
+            // "type" => "required|string|max:50",
         ]);
         $newComic = Comic::create($data);
         return redirect()->route("comics.show", $newComic -> id);
@@ -94,14 +98,29 @@ class ComicController extends Controller
     public function update(Request $request, Comic $comic)
     {
         $data = $request -> all();
-        $comic -> title = $data["title"];
-        $comic -> description = $data["description"];
-        $comic -> thumb = $data["thumb"];
-        $comic -> price = $data["price"];
-        $comic -> series = $data["series"];
-        $comic -> sale_date = $data["sale_date"];
-        $comic -> type = $data["type"]; 
-        $comic -> save();
+        $request -> validate([
+            "title" => "required|string|max:200",
+            "description" => "nullable|string",
+            "thumb" => "nullable|string|max:400|url",
+            "price" => "required|numeric",
+            "series" => "required|string|max:100",
+            "sale_date" => "required|date",
+            "type" => ["required",
+                Rule::in(["comic book", "graphic novel"])
+            ],
+        ]);
+
+        $comic -> update($data);
+    
+        // $data = $request -> all();
+        // $comic -> title = $data["title"];
+        // $comic -> description = $data["description"];
+        // $comic -> thumb = $data["thumb"];
+        // $comic -> price = $data["price"];
+        // $comic -> series = $data["series"];
+        // $comic -> sale_date = $data["sale_date"];
+        // $comic -> type = $data["type"]; 
+        // $comic -> save();
   
         return redirect()->route("comics.show", $comic -> id);
     }
